@@ -1,4 +1,55 @@
 # Kickboard-Safety-System
+
+// --- Python code ---
+
+
+import sys
+import time
+import serial
+from pynput import keyboard
+
+ARDUINO_PORT = "COM4"
+BAUD_RATE = 9600
+
+    ser = serial.Serial(ARDUINO_PORT, BAUD_RATE, timeout=0.1)
+    time.sleep(2)  
+
+w_pressed = False
+
+
+def on_press(key):
+    global w_pressed
+    try:
+        if key.char in ["w", "W"] or key == keyboard.Key.up:
+            if not w_pressed:
+                ser.write(b"1")
+                w_pressed = True
+    except AttributeError:
+        if key == keyboard.Key.up and not w_pressed:
+            ser.write(b"1")
+            w_pressed = True
+
+
+def on_release(key):
+    global w_pressed
+    try:
+        if key.char in ["w", "W"] or key == keyboard.Key.up:
+            ser.write(b"0")
+            w_pressed = False
+    except AttributeError:
+        if key == keyboard.Key.up:
+            ser.write(b"0")
+            w_pressed = False
+
+
+with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+    listener.join()
+
+
+
+// --- Arduino code ---
+
+
 #include <Wire.h>
 
 // --- Multiplexer and Buzzer Pins ---
