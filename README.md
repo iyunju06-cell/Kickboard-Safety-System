@@ -64,7 +64,7 @@ const int IN3 = 10;  // Right Motor Forward (PWM)
 const int IN4 = 11;  // Right Motor Backward (Fixed LOW)
 
 // --- Tuning Parameters ---
-const int FSR_THRESHOLD = 200;     // Threshold for FSR pressure sensor activation
+const int FSR_THRESHOLD = 500;     // Threshold for FSR pressure sensor activation
 const float SHAKE_LIMIT = 5000.0;  // Sensitivity threshold for shake detection 
 const int NORMAL_SPEED = 200;      // Cruising speed under normal conditions
 const int REDUCED_SPEED = 100;     // Reduced speed when shaking is detected
